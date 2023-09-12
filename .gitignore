@@ -139,3 +139,4 @@ cython_debug/
 manage.py
 datacenter
 project
+requirements.txt
