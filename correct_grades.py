@@ -1,6 +1,3 @@
-from datacenter.models import Schoolkid, Mark
-
-
 def get_subject(subject_name, study_year=None):
     from datacenter.models import Subject
 
