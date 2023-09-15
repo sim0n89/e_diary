@@ -7,13 +7,13 @@ def get_subject(subject_name, study_year=None):
 
     try:
         subject = Subject.objects.get(title=subject_name, year_of_study=study_year)
+        return subject
     except Subject.DoesNotExist:
         print(f"Предмет {subject_name} {study_year} класс не найден")
         return
     except Subject.MultipleObjectsReturned:
         print(f"Найдено много предметов {subject_name} {study_year} класс")
         return
-    return subject
 
 
 def get_child(name):
@@ -49,16 +49,19 @@ def create_commendation(child_name, subject_name):
     import random
     from datacenter.models import Commendation
     from datacenter.models import Lesson
+
     child = get_child(child_name)
-    subject = get_subject(subject_name, child.year_of_study)
-    lesson = random.choice(Lesson.objects.filter(subject=subject))
-    Commendation.objects.create(text=random.choice(COMPLIMENTS), created=lesson.date, schoolkid=child, subject=subject, teacher=lesson.teacher)
+    if child:
+        subject = get_subject(subject_name, child.year_of_study)
+        if subject:
+            lesson = Lesson.objects.filter(subject=subject).order_by("?").first()
+            Commendation.objects.create(text=random.choice(COMPLIMENTS), created=lesson.date, schoolkid=child, subject=subject, teacher=lesson.teacher)
 
 
 
 def main():
     name = "Фролов Иван"
-    fix_marks(name)
+    # fix_marks(name)
     # # remove_chastisements(name)
 
 
