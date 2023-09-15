@@ -20,7 +20,7 @@ def get_child(name):
     from datacenter.models import Schoolkid
     try:
         students = Schoolkid.objects.get(full_name__contains=name)
-        students.first()
+        return students
     except Schoolkid.DoesNotExist:
         print("Никто не найден")
         return
@@ -30,12 +30,11 @@ def get_child(name):
 
 
 
-def fix_marks(child_name, subject_name):
+def fix_marks(child_name):
     from datacenter.models import Mark
 
     child = get_child(child_name)
-    subject = get_subject(subject_name, child.year_of_study)
-    Mark.objects.filter(schoolkid=child, subject=subject, points__in=[2, 3]).update(
+    Mark.objects.filter(schoolkid=child, points__in=[2, 3]).update(
         points=5
     )
 
@@ -59,7 +58,7 @@ def create_commendation(child_name, subject_name):
 
 def main():
     name = "Фролов Иван"
-    # # fix_marks(name)
+    fix_marks(name)
     # # remove_chastisements(name)
 
 
