@@ -19,8 +19,8 @@ def get_subject(subject_name, study_year=None):
 def get_child(name):
     from datacenter.models import Schoolkid
     try:
-        students = Schoolkid.objects.get(full_name__contains=name)
-        return students
+        student = Schoolkid.objects.get(full_name__contains=name)
+        return student
     except Schoolkid.DoesNotExist:
         print("Никто не найден")
         return
@@ -59,11 +59,3 @@ def create_commendation(child_name, subject_name):
 
 
 
-def main():
-    name = "Фролов Иван"
-    # fix_marks(name)
-    # # remove_chastisements(name)
-
-
-if __name__ == "__main__":
-    main()
